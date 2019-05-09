@@ -53,3 +53,130 @@
 * Use a `base` directory for styling element selectors, global variables, global extends and global mixins.
 * Use HTML structure for ordering of selectors. Don't just put styles at the bottom of the Sass file.
 * Avoid having files longer than 100 lines.
+
+---
+
+## Selectors
+
+### Selector naming
+
+- Use lowercase characters and hyphens (sometimes referred to as hyphen-case,
+  dash-case, or kebab-case) when naming selectors
+- Don't uses Sass parent selectors (`&`) to concatenate selector names
+
+<details>
+
+#### Code examples
+
+Use hyphens in selector names:
+
+```scss
+.class-name {
+  // …
+}
+```
+
+Don't concatenate selector names:
+
+```scss
+.class {
+  &__child-class {
+    // …
+  }
+}
+```
+
+#### Motivation
+
+Concatenating selector names makes it more difficult to search and find
+selectors in the codebase.
+
+</details>
+
+## Syntax and formatting
+
+### Declarations block ordering
+
+- Order declarations alphabetically
+- Order items within the declaration block in the following order:
+    1. Sass at-rules, e.g. `@include`
+    1. CSS properties
+    1. Media queries
+    1. Pseudo-classes
+    1. Pseudo-elements
+    1. Nested elements
+
+<details>
+
+#### Code examples
+
+Alphabetize declarations:
+
+```scss
+.class {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+```
+
+Alphabetize prefixed properties as if the prefix doesn't exist:
+
+```scss
+.class {
+  font-family: system-ui;
+  -webkit-font-smoothing: antialiased;
+  font-weight: $weight-variable;
+}
+```
+
+Comprehensive example of ordering items within a declaration block:
+
+```scss
+.class {
+  @include size(10px);
+
+  display: block;
+  margin: $spacing-variable;
+
+  @media (min-width: $screen-variable) {
+    padding: $spacing-variable;
+  }
+
+  &:focus {
+    border-color: $color-variable;
+  }
+
+  &::before {
+    content: "";
+  }
+
+  .nested-element {
+    margin: $spacing-variable;
+  }
+}
+```
+
+#### Motivation
+
+Alphabetizing is easily automated and is commonly a feature built into code
+editors. It's also easy for the brain to parse and comprehend.
+
+#### Linting
+
+Alphabetical declaration ordering can be linted using stylelint with the
+[stylelint-order][stylelint-order] plugin and its
+`order/properties-alphabetical-order` rule.
+
+[stylelint-order]: https://github.com/hudochenkov/stylelint-order
+
+#### Resources
+
+- Atom users can use the [Sort Lines package][sort-lines], which provides
+  commands and keybindings for alphabetical sorting.
+- Sublime Text users can use the `Edit > Sort Lines` menu item, or press
+  <kbd>F5</kbd> to sort lines alphabetically.
+
+[sort-lines]: https://github.com/atom/sort-lines
+
+</details>
